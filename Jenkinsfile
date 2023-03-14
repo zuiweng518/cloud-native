@@ -1,9 +1,9 @@
 pipeline {
   agent any
   stages {
-    stage('') {
+    stage('error') {
       steps {
-        git(url: 'https://github.com/zuiweng518/cloud-native.git', poll: true)
+        git 'https://github.com/zuiweng518/cloud-native.git'
       }
     }
 
