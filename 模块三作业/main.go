@@ -8,13 +8,13 @@ import (
 )
 
 func main() {
-	http.HandleFunc("/", Index)
+	http.HandleFunc("/healthz", Healthz)
 	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
 		fmt.Println("http listen failed")
 	}
 }
-func Index(w http.ResponseWriter, r *http.Request) {
+func Healthz(w http.ResponseWriter, r *http.Request) {
 
 	ip := strings.Split(r.RemoteAddr, ":")[0]
 	version := os.Getenv("VERSION")
@@ -26,5 +26,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 
 	}
 	w.WriteHeader(200)
+	response := "httpCode:200"
+	w.Write([]byte(response))
 
 }
