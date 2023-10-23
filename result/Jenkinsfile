@@ -33,7 +33,7 @@ pipeline{
 		}
 		environment{
 		        HARBOR_URL     = "core.harbor.domain"
-                IMAGE_PUSH_DESTINATION="${HARBOR_URL}/vote/result"
+                IMAGE_PUSH_DESTINATION="${HARBOR_URL}/library/result"
                 GIT_COMMIT="${checkout (scm).GIT_COMMIT}"
                 IMAGE_TAG = "${BRANCH_NAME}-${GIT_COMMIT}"
                 BUILD_IMAGE="${IMAGE_PUSH_DESTINATION}:${IMAGE_TAG}"
