@@ -32,7 +32,7 @@ pipeline{
 		  }
 		}
 		environment{
-		        HARBOR_URL     = https://core.harbor.domain
+		        HARBOR_URL     = "core.harbor.domain"
                 IMAGE_PUSH_DESTINATION="${HARBOR_URL}/vote/result"
                 GIT_COMMIT="${checkout (scm).GIT_COMMIT}"
                 IMAGE_TAG = "${BRANCH_NAME}-${GIT_COMMIT}"
