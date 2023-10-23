@@ -39,7 +39,7 @@ pipeline{
                 BUILD_IMAGE="${IMAGE_PUSH_DESTINATION}:${IMAGE_TAG}"
                 BUILD_IMAGE_LATEST="${IMAGE_PUSH_DESTINATION}:latest"
 		}
-		stpes{
+		steps{
 		container(name: 'kaniko', shell: '/busybox/sh') {
                     withEnv(['PATH+EXTRA=/busybox']) {
                         sh '''#!/busybox/sh
