@@ -1,0 +1,25 @@
+pipeline {
+    agent {
+        kubernetes {
+            // 指定运行构建代理的 Kubernetes Pod 配置
+            label 'kaniko-agent'
+        }
+    }
+    environment {
+        // 定义 Docker 仓库的凭据 ID
+        DOCKER_CREDENTIALS = credentials('docker-hub-credentials')
+        // 定义 Docker 镜像的仓库和标签
+        IMAGE_REPO = 'zuiweng518/result1'
+        IMAGE_TAG = 'v2.0'
+    }
+    stages {
+        stage('Build and Push Image') {
+            steps {
+                script {
+                    // 使用 Kaniko 构建 Docker 镜像并推送到指定仓库
+                    sh "kaniko --context . --dockerfile Dockerfile --destination ${IMAGE_REPO}:${IMAGE_TAG} --build-arg http_proxy=${HTTP_PROXY} --build-arg https_proxy=${HTTPS_PROXY}"
+                }
+            }
+        }
+    }
+}
