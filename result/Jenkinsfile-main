@@ -35,6 +35,8 @@ pipeline {
         // 定义 Docker 镜像的仓库和标签
         IMAGE_REPO = 'zuiweng518/result1'
         IMAGE_TAG = 'v2.0'
+        HTTP_PROXY=http://192.168.134.1:4780
+        HTTPS_PROXY=http://192.168.134.1:4780
     }
     stages {
         stage('Build and Push Image') {
