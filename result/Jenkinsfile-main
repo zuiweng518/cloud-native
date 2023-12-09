@@ -14,7 +14,7 @@ pipeline {
         HTTP_PROXY='http://192.168.134.1:4780'
         HTTPS_PROXY='http://192.168.134.1:4780'
     }
-    stages {
+
         stage('Build and Push Image') {
            
                 container("kaniko")
@@ -23,6 +23,6 @@ pipeline {
                     sh "kaniko --context . --dockerfile Dockerfile --destination ${IMAGE_REPO}:${IMAGE_TAG} --build-arg http_proxy=${HTTP_PROXY} --build-arg https_proxy=${HTTPS_PROXY}"
                 }
             
-        }
+ 
     }
 }
