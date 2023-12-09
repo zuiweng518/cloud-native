@@ -18,12 +18,12 @@ pipeline {
         stage('Build and Push Image') {
            
            steps{
-             step{
+         
                 script {
                     // 使用 Kaniko 构建 Docker 镜像并推送到指定仓库
                     sh "kaniko --context . --dockerfile Dockerfile --destination ${IMAGE_REPO}:${IMAGE_TAG} --build-arg http_proxy=${HTTP_PROXY} --build-arg https_proxy=${HTTPS_PROXY}"
                     }
-                  }
+               
               }       
          }
     }
