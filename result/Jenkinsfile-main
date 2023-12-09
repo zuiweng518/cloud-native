@@ -16,7 +16,7 @@ pipeline {
     }
     stages {
         stage('Build and Push Image') {
-           container("kaniko")
+           
            step{
                
                 script {
