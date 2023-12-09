@@ -3,31 +3,7 @@ pipeline {
         kubernetes {
             // 指定运行构建代理的 Kubernetes Pod 配置
              defaultContainer 'kaniko'
-			yaml """
-    kind: Pod
-    spec:
-    container:
-    - name: kaniko
-      image: gcr.io/kaniko-project/executor:v1.11.0-debug
-      imagePullPolicy: Always
-      command:
-      - sleep
-      args:
-      - 99d
-      volumeMounts:
-      - name: jenkins-docker-cfg
-        mountPath: /kaniko/.docker
-    volumes:
-    - name: jenkins-docker-cfg
-      projected:
-        sources:
-        - secret:
-            name: regcred
-            items:
-              - key: .dockerconfigjson
-                path: config.json
-    """
-        }
+       }
     }
     environment {
         // 定义 Docker 仓库的凭据 ID
@@ -41,6 +17,7 @@ pipeline {
     stages {
         stage('Build and Push Image') {
             steps {
+                container("kaniko")
                 script {
                     // 使用 Kaniko 构建 Docker 镜像并推送到指定仓库
                     sh "kaniko --context . --dockerfile Dockerfile --destination ${IMAGE_REPO}:${IMAGE_TAG} --build-arg http_proxy=${HTTP_PROXY} --build-arg https_proxy=${HTTPS_PROXY}"
