@@ -15,8 +15,8 @@ pipeline {
         HTTPS_PROXY='http://192.168.134.1:4780'
     }
     stages {
-        stage('Build and Push Image') {
-           
+        stage('kaniko') {
+           container("kaniko")
            steps{
          
                 script {
