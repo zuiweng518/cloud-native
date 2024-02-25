@@ -11,7 +11,7 @@ pipeline {
            workingDir: /home/jenkins
          - name: kaniko
            workingDir: /home/jenkins
-           image: gcr.io/kaniko-project/executor:debug
+           image: bitnami/kaniko：latest
            command:
            - /busybox/cat
            tty: true
