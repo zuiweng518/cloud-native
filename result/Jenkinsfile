@@ -16,13 +16,13 @@ pipeline {
            - /busybox/cat
            tty: true
            volumeMounts:
-           - name: kaniko-secret
-             mountPath: /root/.kaniko/
+           - name: jenkins-docker-cfg
+             mountPath: /kaniko/.docker
          restartPolicy: Never
          volumes:
-         - name: kaniko-secret
+         - name: jenkins-docker-cfg
            secret:
-             secretName: kaniko-secret
+             secretName: jenkins-docker-cfg
 """
    }
  }
