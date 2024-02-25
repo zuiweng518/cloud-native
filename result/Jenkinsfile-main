@@ -7,7 +7,7 @@ pipeline {
     }
     environment {
         // 定义 Docker 仓库的凭据 ID
-        DOCKER_CREDENTIALS = credentials('docker-hub-credentials')
+        DOCKER_CREDENTIALS = credentials('kaniko-secret')
         // 定义 Docker 镜像的仓库和标签
         IMAGE_REPO = 'zuiweng518/result1'
         IMAGE_TAG = 'v2.0'
