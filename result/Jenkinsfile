@@ -1,22 +1,52 @@
-pipeline{
-  agent none
-stages{
-		environment{
+pipeline {
+ agent {
+   kubernetes {
+     yaml """
+       kind: Pod
+       metadata:
+         name: kaniko
+       spec:
+         containers:
+         - name: jnlp
+           workingDir: /home/jenkins
+         - name: kaniko
+           workingDir: /home/jenkins
+           image: gcr.io/kaniko-project/executor:debug
+           command:
+           - /busybox/cat
+           tty: true
+           volumeMounts:
+           - name: kaniko-secret
+             mountPath: /root/.kaniko/
+         restartPolicy: Never
+         volumes:
+         - name: kaniko-secret
+           secret:
+             secretName: kaniko-secret
+"""
+   }
+ }
+ stages {
+    environment{
 		        HARBOR_URL     = "hub.docker.com"
                 IMAGE_PUSH_DESTINATION="zuiweng518/web"
                 IMAGE_TAG = "v1.0"
                 BUILD_IMAGE="${IMAGE_PUSH_DESTINATION}:${IMAGE_TAG}"
                 BUILD_IMAGE_LATEST="${IMAGE_PUSH_DESTINATION}:latest"
 		}
-		stage {
-		container(name: 'kaniko', shell: '/busybox/sh') {
-                    withEnv(['PATH+EXTRA=/busybox']) {
-                        sh '''#!/busybox/sh
-                            cd result
-                            /kaniko/executor --context `pwd` --destination $IMAGE_PUSH_DESTINATION --insecure
-                        '''
-                    }
-                }
-	}
+   stage('Build DockerImage with Kaniko') {
+     environment {
+       PATH = "/busybox:/kaniko:$PATH"
+     }
+     steps {
+       container(name: 'kaniko', shell: '/busybox/sh') {
+
+
+         sh '''#!/busybox/sh
+           /kaniko/executor --context `pwd` --dockerfile Dockerfile --verbosity debug --destination $BUILD_IMAGE
+         '''
+       }
+     }
    }
+ }
 }
