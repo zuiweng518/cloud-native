@@ -27,13 +27,7 @@ pipeline {
    }
  }
  stages {
-    environment{
-		        HARBOR_URL     = "hub.docker.com"
-                IMAGE_PUSH_DESTINATION="zuiweng518/web"
-                IMAGE_TAG = "v1.0"
-                BUILD_IMAGE="${IMAGE_PUSH_DESTINATION}:${IMAGE_TAG}"
-                BUILD_IMAGE_LATEST="${IMAGE_PUSH_DESTINATION}:latest"
-		}
+   
    stage('Build DockerImage with Kaniko') {
      environment {
        PATH = "/busybox:/kaniko:$PATH"
@@ -43,7 +37,7 @@ pipeline {
 
 
          sh '''#!/busybox/sh
-           /kaniko/executor --context `pwd` --dockerfile Dockerfile --verbosity debug --destination $BUILD_IMAGE
+           /kaniko/executor --context `pwd` --dockerfile Dockerfile --verbosity debug --destination zuiweng518/web:v1.0
          '''
        }
      }
