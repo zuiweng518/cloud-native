@@ -45,13 +45,10 @@ spec:
 
             steps {
               
-                container(name: 'kaniko', shell: '/busybox/sh') {
-                    withEnv(['PATH+EXTRA=/busybox']) {
-                        sh '''#!/busybox/sh
-                            cd result
-                            /kaniko/executor --context `pwd` --destination $BUILD_IMAGE_LATEST --insecure
-                        '''
-                    }
+              script {
+                    sh "echo '{\"auths\":{\"docker.io\":{\"username\":\"zuiweng518\",\"password\":\"19873152-01x\",\"email\":\"mashenghao@126.com\",\"auth\":\"\"}}}' > /kaniko/.docker/config.json"
+
+                    sh "cat ${DOCKERFILE_PATH} | /kaniko/executor --context=/workspace/ --dockerfile=- --destination=$BUILD_IMAGE_LATEST"
                 }
            
          }
