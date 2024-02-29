@@ -44,6 +44,7 @@ spec:
             }
 
             steps {
+              try{  
                 container(name: 'kaniko', shell: '/busybox/sh') {
                     withEnv(['PATH+EXTRA=/busybox']) {
                         sh '''#!/busybox/sh
@@ -52,7 +53,12 @@ spec:
                         '''
                     }
                 }
+            }catch(Exception e){
+                   echo "Error during Kaniko execution: ${e.message}"
+                currentBuild.result = 'FAILURE'
+                error("Kaniko execution failed")
             }
+         }
         }
     }
 }
