@@ -13,7 +13,7 @@ spec:
     runAsUser: 1000
   containers:
   - name: kaniko
-    image: bitnami/kaniko:latest
+    image: gcr.io/kaniko-project/executor:v1.11.0-debug
     imagePullPolicy: Always
     command:
     - sleep
