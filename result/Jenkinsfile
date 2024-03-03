@@ -48,7 +48,7 @@ spec:
                     withEnv(['PATH+EXTRA=/busybox']) {
                         sh '''#!/busybox/sh
                             cd result
-                            /kaniko/executor --context `pwd` --destination  BUILD_IMAGE_LATEST 
+                            /kaniko/executor --context `pwd` --destination  $BUILD_IMAGE_LATEST 
                         '''
                     }
                 }
