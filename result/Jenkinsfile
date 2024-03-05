@@ -9,8 +9,6 @@ pipeline {
                     yaml """
 kind: Pod
 spec:
-  securityContext:
-    runAsUser: 1000
   containers:
   - name: kaniko
     image: gcr.io/kaniko-project/executor:v1.11.0-debug
